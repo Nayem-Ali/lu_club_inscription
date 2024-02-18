@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "978700481634",
+    "project_id": "lu-club-inscription-6a507",
+    "storage_bucket": "lu-club-inscription-6a507.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978700481634:android:3b7c8e4e4a5a4a0894cd3b",
+        "android_client_info": {
+          "package_name": "com.example.lu_club_inscription"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978700481634-fb2kt0id0sq1vmascsobpba8j4r3ds33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4sgBjFmrUef6sLN7xFNP6W8OCM9yaVWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978700481634-fb2kt0id0sq1vmascsobpba8j4r3ds33.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
