@@ -13,6 +13,7 @@ class ClubRegistration extends StatefulWidget {
 }
 
 class _ClubRegistrationState extends State<ClubRegistration> {
+  FireStoreService fireStoreService = FireStoreService();
   bool advisor = true;
   bool coAdvisor = false;
   bool coAdvisor2 = false;
@@ -651,7 +652,7 @@ class _ClubRegistrationState extends State<ClubRegistration> {
                         clubInfo['presidentUrl'] = "";
                         clubInfo['secretaryUrl'] = "";
 
-                       addClubInfo(clubInfo);
+                       fireStoreService.addClubInfo(clubInfo);
                       }
                       if(logoUrl == "" || advisorUrl == "" || coAdvisorUrl == "" || presidentUrl == "" || secretaryUrl == ""){
                         showToast("Please add images");
@@ -670,7 +671,7 @@ class _ClubRegistrationState extends State<ClubRegistration> {
                           images.add(secretaryImage);
                         }
                         print("File Uploading");
-                        await uploadFile(images, clubAcronym.text.trim());
+                        await fireStoreService.uploadFile(images, clubAcronym.text.trim());
                         print("Uploading Complete");
                       }
 

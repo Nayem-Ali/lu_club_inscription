@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lu_club_inscription/section/functionality/admin/add_events.dart';
+import 'package:get/get.dart';
+import 'package:lu_club_inscription/section/functionality/admin/all_events.dart';
 import 'package:lu_club_inscription/section/functionality/admin/club_details.dart';
 import 'package:lu_club_inscription/section/functionality/admin/club_register.dart';
-import 'package:lu_club_inscription/section/functionality/admin/all_events.dart';
-import 'package:lu_club_inscription/section/functionality/admin/pending_request.dart';
+import 'package:lu_club_inscription/section/functionality/admin/members_management.dart';
 
-import '../../../utility/reusable_widgets.dart';
 import '../../../servcies/firebase.dart';
+import '../../../utility/reusable_widgets.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -16,6 +16,7 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
+  FireStoreService fireStoreService = FireStoreService();
   dynamic adminData = {};
   dynamic clubData = {};
   bool hasClub = false;
@@ -29,10 +30,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   getData() async {
-    adminData = await getAdminData();
+    adminData = await fireStoreService.getAdminData();
     hasClub = adminData['hasClub'];
     clubAcronym = adminData['clubAcronym'];
-    clubData = await getClubData(clubAcronym);
+    clubData = await fireStoreService.getClubData(clubAcronym);
     setState(() {});
   }
 
@@ -44,7 +45,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         actions: [
           IconButton(
               onPressed: () {
-                logoutUser(context);
+                fireStoreService.logoutUser(context);
               },
               icon: const Icon(Icons.logout))
         ],
@@ -52,47 +53,65 @@ class _AdminDashboardState extends State<AdminDashboard> {
       ),
       body: clubData.isNotEmpty
           ? Center(
-            child: Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ClubDetails(),));
+                      Get.to(() => const ClubDetails());
                     },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80)
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(300, 80)),
+                    icon: const Icon(
+                      Icons.info,
+                      size: 40,
                     ),
-                    icon: const Icon(Icons.info,size: 40,),
-                    label: Text("Club Details",style: txtStyle(24, FontWeight.bold),),
+                    label: Text(
+                      "Club Details",
+                      style: txtStyle(24, FontWeight.bold),
+                    ),
                   ),
-                  const SizedBox(height: 40,),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const AllEvents(),));
+                      Get.to(() => const AllEvents());
                     },
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 80)
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(300, 80)),
+                    icon: const Icon(
+                      Icons.event,
+                      size: 40,
                     ),
-                    icon: const Icon(Icons.event,size: 40,),
-                    label: Text("Events",style: txtStyle(24, FontWeight.bold),),
+                    label: Text(
+                      "Events",
+                      style: txtStyle(24, FontWeight.bold),
+                    ),
                   ),
-                  const SizedBox(height: 40,),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   ElevatedButton.icon(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 80)
+                    onPressed: () {
+                      Get.to(()=> const MembersManagement());
+                    },
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(300, 80)),
+                    icon: const Icon(
+                      Icons.people,
+                      size: 40,
                     ),
-                    icon: const Icon(Icons.people,size: 40,),
-                    label: Text("Members",style: txtStyle(24, FontWeight.bold),),
+                    label: Text(
+                      "Members",
+                      style: txtStyle(24, FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
-          )
+            )
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Divider(),
-                hasClub ? Text(hasClub.toString()) : CircularProgressIndicator(),
+                hasClub ? Text(hasClub.toString()) : const CircularProgressIndicator(),
                 // Text("${adminData['name']}"),
                 // Text("${adminData['admin']}"),
                 // Text("${adminData['hasClub']}"),

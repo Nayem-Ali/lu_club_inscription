@@ -12,6 +12,7 @@ class EditEventData extends StatefulWidget {
 }
 
 class _EditEventDataState extends State<EditEventData> {
+  FireStoreService fireStoreService = FireStoreService();
   TextEditingController eventName = TextEditingController();
   TextEditingController eventDescription = TextEditingController();
   TextEditingController receiverName = TextEditingController();
@@ -46,7 +47,7 @@ class _EditEventDataState extends State<EditEventData> {
       "paymentNumber": paymentNumber.text.trim(),
       "fees": fees.text.trim(),
     };
-    await updateEvent(data);
+    await fireStoreService.updateEvent(data);
   }
 
   @override

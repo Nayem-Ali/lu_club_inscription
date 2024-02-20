@@ -19,7 +19,7 @@ class _InitialClubPageState extends State<InitialClubPage> {
   final page = [
     ClubEvents(clubAcronym: Get.arguments),
     ClubDetails(clubAcronym: Get.arguments),
-    const MemberRegistration(),
+    MemberRegistration(clubAcronym: Get.arguments),
   ];
 
   @override

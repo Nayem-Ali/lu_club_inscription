@@ -3,8 +3,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lu_club_inscription/section/functionality/admin/adminDashboard.dart';
-import 'package:lu_club_inscription/section/functionality/home_screen.dart';
-import 'package:lu_club_inscription/section/functionality/profile_screen.dart';
+import 'package:lu_club_inscription/section/functionality/clubs/home_screen.dart';
+import 'package:lu_club_inscription/section/functionality/clubs/profile_screen.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
 

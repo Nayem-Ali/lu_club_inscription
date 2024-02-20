@@ -14,6 +14,7 @@ addUserInfo(String uid, String name, String cell) async {
   await fireStore.collection("user").doc(uid).set({
     "uid": uid,
     "name": name,
+    "id": "",
     "department": "",
     "batch": "",
     "section": "",
@@ -21,6 +22,7 @@ addUserInfo(String uid, String name, String cell) async {
     "gender": "",
     "cell": cell,
     "admin": false,
+    "img": "",
   });
 }
 

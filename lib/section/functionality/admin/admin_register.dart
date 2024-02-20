@@ -13,6 +13,7 @@ class AdminRegister extends StatefulWidget {
 }
 
 class _AdminRegisterState extends State<AdminRegister> {
+  FireStoreService fireStoreService = FireStoreService();
   TextEditingController nameController = TextEditingController();
   TextEditingController adminEmail = TextEditingController();
   TextEditingController adminPassword = TextEditingController();
@@ -105,12 +106,12 @@ class _AdminRegisterState extends State<AdminRegister> {
                   ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        registerUser(
-                            adminEmail.text.trim(),
-                            adminPassword.text.trim(),
-                            nameController.text.trim(),
-                            context);
-
+                        fireStoreService.registerUser(
+                          adminEmail.text.trim(),
+                          adminPassword.text.trim(),
+                          nameController.text.trim(),
+                          context,
+                        );
                       }
                     },
                     style: elevated(),
@@ -123,9 +124,7 @@ class _AdminRegisterState extends State<AdminRegister> {
                   TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AdminLogin()));
+                            context, MaterialPageRoute(builder: (context) => const AdminLogin()));
                       },
                       child: Text(
                         "Login as Admin",

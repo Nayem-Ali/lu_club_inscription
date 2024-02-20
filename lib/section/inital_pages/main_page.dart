@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lu_club_inscription/section/functionality/navigator_screen.dart';
+import 'package:lu_club_inscription/section/functionality/clubs/navigator_screen.dart';
 import 'package:lu_club_inscription/section/user_authentication/login_screen.dart';
 
 

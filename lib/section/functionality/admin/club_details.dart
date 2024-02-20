@@ -13,6 +13,7 @@ class ClubDetails extends StatefulWidget {
 }
 
 class _ClubDetailsState extends State<ClubDetails> {
+  FireStoreService fireStoreService = FireStoreService();
   dynamic clubData = {};
   late String clubAcronym;
   dynamic adminData = {};
@@ -25,9 +26,9 @@ class _ClubDetailsState extends State<ClubDetails> {
   }
 
   getData() async {
-    adminData = await getAdminData();
+    adminData = await fireStoreService.getAdminData();
     clubAcronym = adminData['clubAcronym'];
-    clubData = await getClubData(clubAcronym);
+    clubData = await fireStoreService.getClubData(clubAcronym);
     setState(() {});
   }
 

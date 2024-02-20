@@ -1,14 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lu_club_inscription/section/functionality/updateInfoScreen.dart';
+import 'package:lu_club_inscription/section/functionality/clubs/updateInfoScreen.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
-import 'dart:io';
+
+import '../../../servcies/firebase.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  FireStoreService fireStoreService = FireStoreService();
   dynamic userInfo = {};
   final ImagePicker _picker = ImagePicker();
   late File image;
@@ -32,36 +35,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   fetchUserData() async {
-    FirebaseFirestore fireStore = FirebaseFirestore.instance;
-    FirebaseAuth auth = FirebaseAuth.instance;
-    String uid = auth.currentUser!.uid;
-    await fireStore
-        .collection("user")
-        .doc(uid)
-        .get()
-        .then((value) => {userInfo = value.data()});
-    setState(() {
-      imageUrl = userInfo["img"];
-    });
+    userInfo = await fireStoreService.getUserData();
+    imageUrl = userInfo['img'];
+    setState(() {});
   }
 
   Future uploadFile() async {
     var destination = 'files/${auth.currentUser!.uid}';
 
     try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
+      final ref = firebase_storage.FirebaseStorage.instance.ref(destination).child('file/');
       await ref.putFile(image);
       String tempUrl = await ref.getDownloadURL();
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       FirebaseAuth auth = FirebaseAuth.instance;
-      await firestore
-          .collection("user")
-          .doc(auth.currentUser!.uid)
-          .update({"img": tempUrl});
+      await firestore.collection("user").doc(auth.currentUser!.uid).update({"img": tempUrl});
 
-     fetchUserData();
+      fetchUserData();
     } catch (e) {
       print('error occured');
     }
@@ -71,7 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showModalBottomSheet(
       isScrollControlled: true,
       useSafeArea: true,
-
       context: context,
       builder: (context) {
         return const UpdateInfoScreen();
@@ -80,8 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future selectPhoto(ImageSource source) async {
-    final pickedFile =
-    await _picker.pickImage(source: source, imageQuality: 50);
+    final pickedFile = await _picker.pickImage(source: source, imageQuality: 50);
 
     if (pickedFile == null) {
       return;
@@ -143,16 +131,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-               imageUrl != "" ? CircleAvatar(
-                  radius: 80,
-                  backgroundImage: NetworkImage(imageUrl)
-
-                ) : const CircleAvatar(
-                 radius: 80,
-                   child: Icon(Icons.person,
-                   size: 100,
-                 ),
-               ),
+                imageUrl != ""
+                    ? CircleAvatar(radius: 80, backgroundImage: NetworkImage(imageUrl))
+                    : const CircleAvatar(
+                        radius: 80,
+                        child: Icon(
+                          Icons.person,
+                          size: 100,
+                        ),
+                      ),
                 OutlinedButton.icon(
                   onPressed: profilePicture,
                   label: Text(
@@ -171,6 +158,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(
                       "Name: ${userInfo['name']}",
+                      style: txtStyle(20, FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      "Student ID: ${userInfo['id']}",
                       style: txtStyle(20, FontWeight.w500),
                     ),
                     const SizedBox(

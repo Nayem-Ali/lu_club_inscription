@@ -29,11 +29,6 @@ import 'package:google_fonts/google_fonts.dart';
         fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-      ),
     );
 
     

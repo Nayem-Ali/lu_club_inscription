@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lu_club_inscription/section/functionality/profile_screen.dart';
+import 'package:lu_club_inscription/section/functionality/clubs/profile_screen.dart';
 
 enum Gender { male, female, others }
 
@@ -21,6 +21,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
   TextEditingController batch = TextEditingController();
   TextEditingController section = TextEditingController();
   TextEditingController phone = TextEditingController();
+  TextEditingController id = TextEditingController();
   DateTime? selectedDate;
   dynamic userInfo = {};
 
@@ -34,6 +35,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
     batch.text = userInfo['batch'];
     section.text = userInfo['section'];
     phone.text = userInfo['cell'];
+    id.text = userInfo['id'];
     selectedDate = DateTime.tryParse(userInfo['dob']);
 
     setState(() {});
@@ -97,12 +99,30 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  controller: dept,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.business_sharp),
-                    hintText: "Department",
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: dept,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.business_sharp),
+                          hintText: "Department",
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: id,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.business_sharp),
+                          hintText: "Student ID",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,
@@ -156,7 +176,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                             selectedGender = value;
                           });
                         },
-                      decoration: InputDecoration(prefixIcon: Icon(Icons.select_all)),
+                        decoration: const InputDecoration(prefixIcon: Icon(Icons.select_all)),
                       ),
                     ),
                     const SizedBox(

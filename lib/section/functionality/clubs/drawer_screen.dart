@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_club_inscription/section/functionality/admin/admin_register.dart';
-import '../../utility/reusable_widgets.dart';
-import '../user_authentication/login_screen.dart';
-import 'admin/admin_login.dart';
+import '../../../utility/reusable_widgets.dart';
+import '../../user_authentication/login_screen.dart';
+import '../admin/admin_login.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({Key? key}) : super(key: key);

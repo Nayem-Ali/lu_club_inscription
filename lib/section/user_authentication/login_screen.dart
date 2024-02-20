@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lu_club_inscription/section/functionality/admin/admin_login.dart';
-import 'package:lu_club_inscription/section/functionality/navigator_screen.dart';
+import 'package:lu_club_inscription/section/functionality/clubs/navigator_screen.dart';
 import 'package:lu_club_inscription/section/user_authentication/reset_pass_screen.dart';
 import 'package:lu_club_inscription/section/user_authentication/signup_screen.dart';
 import 'package:lu_club_inscription/servcies/auth.dart';

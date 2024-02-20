@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/initial_club_page.dart';
-import 'package:lu_club_inscription/section/functionality/drawer_screen.dart';
+import 'package:lu_club_inscription/section/functionality/clubs/drawer_screen.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
 class HomeScreen extends StatefulWidget {

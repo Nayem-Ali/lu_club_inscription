@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:lu_club_inscription/section/functionality/admin/add_events.dart';
+import 'package:lu_club_inscription/section/functionality/admin/view_event.dart';
 import 'package:lu_club_inscription/servcies/firebase.dart';
 import 'package:lu_club_inscription/section/functionality/admin/edit_club_events.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
@@ -13,7 +16,7 @@ class AllEvents extends StatefulWidget {
 }
 
 class _AllEventsState extends State<AllEvents> {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FireStoreService fireStoreService = FireStoreService();
   dynamic events = [];
 
   @override
@@ -24,7 +27,7 @@ class _AllEventsState extends State<AllEvents> {
   }
 
   getData() async {
-    events = await getEvents();
+    events = await fireStoreService.getEvents();
     setState(() {});
   }
 
@@ -36,7 +39,8 @@ class _AllEventsState extends State<AllEvents> {
           title: const Text("Click yes to delete event"),
           actions: [
             TextButton(onPressed: () async {
-              dynamic clubID = await clubAcronym();
+              FirebaseFirestore fireStore = FirebaseFirestore.instance;
+              dynamic clubID = await fireStoreService.clubAcronym();
               await fireStore.collection("clubs").doc(clubID).collection("allEvents").doc(docID).delete();
               await getData();
             }, child: const Text("Yes")),
@@ -50,48 +54,7 @@ class _AllEventsState extends State<AllEvents> {
 
   }
 
-  showEventInfo(int index) {
-    showModalBottomSheet(
-      useSafeArea: true,
-      isScrollControlled: false,
-      context: context,
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text(
-                events[index]["eventName"].toString(),
-                style: txtStyle(22, FontWeight.bold),
-              ),
-              const Spacer(),
-              Text(
-                "Description: ${events[index]["eventDescription"]}",
-                style: txtStyle(16, FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const Spacer(),
-              Text(
-                "Payment Receiver: ${events[index]["eventHandler"]}",
-                style: txtStyle(16, FontWeight.bold),
-              ),
-              const Spacer(),
-              Text(
-                "Bkash Number: ${events[index]["paymentNumber"]} ",
-                style: txtStyle(16, FontWeight.bold),
-              ),
-              const Spacer(),
-              Text(
-                "Fees: ${events[index]["fees"]}",
-                style: txtStyle(16, FontWeight.bold),
-              ),
-              const Spacer(),
-            ],
-          ),
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,9 +75,9 @@ class _AllEventsState extends State<AllEvents> {
                       return Card(
                         color: index % 2 == 1 ? Colors.cyan.shade100 : Colors.lime.shade100,
                         child: ListTile(
-                          title: GestureDetector(
+                          title: InkWell(
                             onTap: () {
-                              showEventInfo(index);
+                              Get.to(()=> const ViewEvent(), arguments: events[index]);
                             },
                             child: Text(
                               events[index]["eventName"].toString(),

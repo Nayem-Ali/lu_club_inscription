@@ -12,6 +12,7 @@ class AddEvent extends StatefulWidget {
 }
 
 class _AddEventState extends State<AddEvent> {
+  FireStoreService fireStoreService = FireStoreService();
   final List<TextEditingController> eventName = [TextEditingController()];
   final List<TextEditingController> receiverName = [TextEditingController()];
   final List<TextEditingController> eventDescription = [TextEditingController()];
@@ -51,7 +52,6 @@ class _AddEventState extends State<AddEvent> {
                       TextFormField(
                         controller: eventDescription[index],
                         decoration: const InputDecoration(
-
                           border: OutlineInputBorder(),
                           label: Text("Segment description"),
                         ),
@@ -104,11 +104,10 @@ class _AddEventState extends State<AddEvent> {
                             },
                             child: const Text("Create Another"),
                           ),
-                          if(index !=0)
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-
+                          if (index != 0)
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
                                   eventName[index].clear();
                                   eventName[index].dispose();
                                   eventName.removeAt(index);
@@ -124,11 +123,10 @@ class _AddEventState extends State<AddEvent> {
                                   fees[index].clear();
                                   fees[index].dispose();
                                   fees.removeAt(index);
-
-                              });
-                            },
-                            child: const Text("Remove"),
-                          ),
+                                });
+                              },
+                              child: const Text("Remove"),
+                            ),
                         ],
                       ),
                     ],
@@ -137,15 +135,14 @@ class _AddEventState extends State<AddEvent> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-              addEvent(eventName, eventDescription, payments, fees, receiverName);
-              showToast("Event added successfully");
-              sleep(const Duration(seconds: 5));
-              Navigator.of(context).pop();
+              onPressed: () async {
+                await fireStoreService.addEvent(
+                    eventName, eventDescription, payments, fees, receiverName);
+                showToast("Event added successfully");
+                sleep(const Duration(seconds: 5));
+                Navigator.of(context).pop();
               },
-              style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(300, 45)
-              ),
+              style: ElevatedButton.styleFrom(minimumSize: const Size(300, 45)),
               child: Text(
                 "ADD",
                 style: txtStyle(17, FontWeight.bold),

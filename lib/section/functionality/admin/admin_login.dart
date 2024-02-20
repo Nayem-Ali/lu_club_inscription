@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lu_club_inscription/section/functionality/admin/adminDashboard.dart';
 import 'package:lu_club_inscription/section/functionality/admin/admin_register.dart';
 import 'package:lu_club_inscription/servcies/firebase.dart';
 
@@ -14,6 +13,7 @@ class AdminLogin extends StatefulWidget {
 }
 
 class _AdminLoginState extends State<AdminLogin> {
+  FireStoreService fireStoreService = FireStoreService();
   TextEditingController adminEmail = TextEditingController();
   TextEditingController adminPassword = TextEditingController();
   TextEditingController adminConfirmPassword = TextEditingController();
@@ -49,14 +49,8 @@ class _AdminLoginState extends State<AdminLogin> {
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () {
-                    // Navigator.pushAndRemoveUntil(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const AdminDashboard()),
-                    //     (route) => false);
-
-                      loginUser(adminEmail.text.trim(), adminPassword.text.trim(), context);
-
+                    fireStoreService.loginUser(
+                        adminEmail.text.trim(), adminPassword.text.trim(), context);
                   },
                   style: elevated(),
                   child: Text(
@@ -68,9 +62,7 @@ class _AdminLoginState extends State<AdminLogin> {
                 TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AdminRegister()));
+                          context, MaterialPageRoute(builder: (context) => const AdminRegister()));
                     },
                     child: Text(
                       "Register as Admin",

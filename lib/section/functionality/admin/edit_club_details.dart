@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lu_club_inscription/section/functionality/admin/club_details.dart';
 
-import '../../../utility/reusable_widgets.dart';
 import '../../../servcies/firebase.dart';
+import '../../../utility/reusable_widgets.dart';
 
 class EditClubData extends StatefulWidget {
   dynamic clubDetails = {};
@@ -17,6 +19,7 @@ class EditClubData extends StatefulWidget {
 }
 
 class _EditClubDataState extends State<EditClubData> {
+  FireStoreService fireStoreService = FireStoreService();
   bool advisor = false;
   bool coAdvisor = false;
   bool coAdvisor2 = false;
@@ -140,7 +143,8 @@ class _EditClubDataState extends State<EditClubData> {
                             setState(() {
                               logoUrl = logo.path;
                             });
-                            await updatePhoto(logo, clubAcronym.text.trim(), "logoUrl", "logo");
+                            await fireStoreService.updatePhoto(
+                                logo, clubAcronym.text.trim(), "logoUrl", "logo");
                           } else {
                             showToast("Something went wrong");
                           }
@@ -266,8 +270,8 @@ class _EditClubDataState extends State<EditClubData> {
                                   setState(() {
                                     advisorUrl = advisorImage.path;
                                   });
-                                  await updatePhoto(advisorImage, clubAcronym.text.trim(),
-                                      "advisorUrl", "advisor");
+                                  await fireStoreService.updatePhoto(advisorImage,
+                                      clubAcronym.text.trim(), "advisorUrl", "advisor");
                                 } else {
                                   showToast("Something went wrong");
                                 }
@@ -357,12 +361,8 @@ class _EditClubDataState extends State<EditClubData> {
                                   setState(() {
                                     coAdvisorUrl = coAdvisorImage1.path;
                                   });
-                                  await updatePhoto(
-                                    coAdvisorImage1,
-                                    clubAcronym.text.trim(),
-                                    "coAdvisorUrl1",
-                                    "coAdvisor1"
-                                  );
+                                  await fireStoreService.updatePhoto(coAdvisorImage1,
+                                      clubAcronym.text.trim(), "coAdvisorUrl1", "coAdvisor1");
                                 } else {
                                   showToast("Something went wrong");
                                 }
@@ -451,12 +451,8 @@ class _EditClubDataState extends State<EditClubData> {
                                   setState(() {
                                     coAdvisorUrl2 = coAdvisorImage2.path;
                                   });
-                                  await updatePhoto(
-                                    coAdvisorImage2,
-                                    clubAcronym.text.trim(),
-                                    "coAdvisorUrl2",
-                                    "coAdvisor2"
-                                  );
+                                  await fireStoreService.updatePhoto(coAdvisorImage2,
+                                      clubAcronym.text.trim(), "coAdvisorUrl2", "coAdvisor2");
                                 } else {
                                   showToast("Something went wrong");
                                 }
@@ -537,12 +533,9 @@ class _EditClubDataState extends State<EditClubData> {
                             setState(() {
                               presidentUrl = presidentImage.path;
                             });
-                            await updatePhoto(
-                              presidentImage,
-                              clubAcronym.text.trim(),
-                              "presidentUrl",
-                              "president"
-                            );
+                            await fireStoreService.updatePhoto(presidentImage, clubAcronym.text
+                                .trim(),
+                                "presidentUrl", "president");
                           } else {
                             showToast("Something went wrong");
                           }
@@ -611,12 +604,9 @@ class _EditClubDataState extends State<EditClubData> {
                             setState(() {
                               secretaryUrl = secretaryImage.path;
                             });
-                            await updatePhoto(
-                              secretaryImage,
-                              clubAcronym.text.trim(),
-                              "secretaryUrl",
-                              "secretary"
-                            );
+                            await fireStoreService.updatePhoto(secretaryImage, clubAcronym.text
+                                .trim(),
+                                "secretaryUrl", "secretary");
                           } else {
                             showToast("Something went wrong");
                           }
@@ -692,13 +682,9 @@ class _EditClubDataState extends State<EditClubData> {
                         // clubInfo['presidentUrl'] = "";
                         // clubInfo['secretaryUrl'] = "";
 
-                        await updateClubInfo(clubInfo);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ClubDetails(),
-                          ),
-                        );
+                        await fireStoreService.updateClubInfo(clubInfo);
+                        Get.off(() => const ClubDetails());
+
                       }
                       // if (logoUrl == "" ||
                       //     advisorUrl == "" ||
