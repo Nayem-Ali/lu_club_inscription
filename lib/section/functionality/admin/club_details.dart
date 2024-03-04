@@ -3,7 +3,7 @@ import 'package:lu_club_inscription/section/functionality/admin/club_register.da
 import 'package:lu_club_inscription/section/functionality/admin/edit_club_details.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
-import '../../../servcies/firebase.dart';
+import '../../../services/firebase.dart';
 
 class ClubDetails extends StatefulWidget {
   const ClubDetails({Key? key}) : super(key: key);

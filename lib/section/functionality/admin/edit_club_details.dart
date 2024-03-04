@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lu_club_inscription/section/functionality/admin/club_details.dart';
 
-import '../../../servcies/firebase.dart';
+import '../../../services/firebase.dart';
 import '../../../utility/reusable_widgets.dart';
 
 class EditClubData extends StatefulWidget {

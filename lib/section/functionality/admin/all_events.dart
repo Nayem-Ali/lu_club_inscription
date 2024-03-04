@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lu_club_inscription/section/functionality/admin/add_events.dart';
 import 'package:lu_club_inscription/section/functionality/admin/view_event.dart';
-import 'package:lu_club_inscription/servcies/firebase.dart';
+import 'package:lu_club_inscription/services/firebase.dart';
 import 'package:lu_club_inscription/section/functionality/admin/edit_club_events.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 

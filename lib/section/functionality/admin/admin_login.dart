@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lu_club_inscription/section/functionality/admin/admin_register.dart';
-import 'package:lu_club_inscription/servcies/firebase.dart';
+import 'package:lu_club_inscription/services/firebase.dart';
 
 import '../../../utility/logo.dart';
 import '../../../utility/reusable_widgets.dart';

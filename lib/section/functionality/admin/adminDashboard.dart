@@ -5,7 +5,7 @@ import 'package:lu_club_inscription/section/functionality/admin/club_details.dar
 import 'package:lu_club_inscription/section/functionality/admin/club_register.dart';
 import 'package:lu_club_inscription/section/functionality/admin/members_management.dart';
 
-import '../../../servcies/firebase.dart';
+import '../../../services/firebase.dart';
 import '../../../utility/reusable_widgets.dart';
 
 class AdminDashboard extends StatefulWidget {

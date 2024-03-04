@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/updateInfoScreen.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
-import '../../../servcies/firebase.dart';
+import '../../../services/firebase.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);

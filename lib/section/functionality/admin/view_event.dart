@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lu_club_inscription/servcies/firebase.dart';
+import 'package:lu_club_inscription/services/firebase.dart';
 
 import '../../../utility/reusable_widgets.dart';
 

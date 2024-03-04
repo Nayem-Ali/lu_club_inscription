@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lu_club_inscription/servcies/firebase.dart';
+import 'package:lu_club_inscription/services/firebase.dart';
 
 class MembersManagement extends StatefulWidget {
   const MembersManagement({Key? key}) : super(key: key);
@@ -47,6 +47,7 @@ class _MembersManagementState extends State<MembersManagement> {
                       clubAcronym,
                       pending[index]['uid'],
                       'approved',
+                      true,
                     );
                     await getAllMembers();
                     Get.back();
@@ -58,6 +59,7 @@ class _MembersManagementState extends State<MembersManagement> {
                       clubAcronym,
                       pending[index]['uid'],
                       'rejected',
+                      false,
                     );
                     await getAllMembers();
                     Get.back();

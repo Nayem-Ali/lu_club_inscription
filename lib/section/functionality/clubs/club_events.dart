@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:lu_club_inscription/section/functionality/chats/chat_page.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/event_details_page.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
@@ -43,6 +44,7 @@ class _ClubEventsState extends State<ClubEvents> {
       appBar: AppBar(
         title: const Text("Club Events"),
         centerTitle: true,
+
       ),
       body: events.length == 0
           ? const Center(
@@ -51,6 +53,7 @@ class _ClubEventsState extends State<ClubEvents> {
           : ListView.builder(
               itemCount: events.length,
               itemBuilder: (context, index) {
+                String eventName = events[index]["eventName"] ?? "Unknown Event";
                 return Card(
                   color: index % 2 == 1 ? Colors.cyan.shade100 : Colors.lime.shade100,
                   child: ListTile(

@@ -7,15 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lu_club_inscription/section/functionality/admin/adminDashboard.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
-
 import '../section/user_authentication/login_screen.dart';
 
 class FireStoreService {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  registerUser(String email, String password, String name, BuildContext context) async {
-    auth.createUserWithEmailAndPassword(email: email, password: password).then((userInfo) async {
+  registerUser(
+      String email, String password, String name, BuildContext context) async {
+    auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((userInfo) async {
       await userInfo.user?.sendEmailVerification().whenComplete(() {
         return showDialog(
           context: context,
@@ -61,8 +63,8 @@ class FireStoreService {
               builder: (context) {
                 return AlertDialog(
                   title: const Text("Email verification message is sent"),
-                  content:
-                      Text("To login with your account please verify your email $email first."),
+                  content: Text(
+                      "To login with your account please verify your email $email first."),
                   actions: [
                     TextButton(
                         onPressed: () {
@@ -124,15 +126,22 @@ class FireStoreService {
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     FirebaseAuth auth = FirebaseAuth.instance;
     String uid = auth.currentUser!.uid;
-    await fireStore.collection("user").doc(uid).get().then((value) => {userInfo = value.data()});
+    await fireStore
+        .collection("user")
+        .doc(uid)
+        .get()
+        .then((value) => {userInfo = value.data()});
     return userInfo;
   }
 
   addAdminInfo(String uid, String name) async {
-    await fireStore
-        .collection("admin")
-        .doc(uid)
-        .set({"uid": uid, "name": name, "admin": true, "hasClub": false, "clubAcronym": ""});
+    await fireStore.collection("admin").doc(uid).set({
+      "uid": uid,
+      "name": name,
+      "admin": true,
+      "hasClub": false,
+      "clubAcronym": ""
+    });
   }
 
   addClubInfo(Map<String, String> info) async {
@@ -145,7 +154,11 @@ class FireStoreService {
 
   dynamic clubAcronym() async {
     dynamic clubID;
-    await fireStore.collection("admin").doc(auth.currentUser!.uid).get().then((value) async {
+    await fireStore
+        .collection("admin")
+        .doc(auth.currentUser!.uid)
+        .get()
+        .then((value) async {
       clubID = await value["clubAcronym"];
     });
     // print(clubID);
@@ -171,11 +184,13 @@ class FireStoreService {
     return clubData;
   }
 
-  updatePhoto(File image, String location, String urlName, String fileName) async {
+  updatePhoto(
+      File image, String location, String urlName, String fileName) async {
     var destination = location;
     String url;
-    final ref =
-        firebase_storage.FirebaseStorage.instance.ref(destination).child('images/$fileName');
+    final ref = firebase_storage.FirebaseStorage.instance
+        .ref(destination)
+        .child('images/$fileName');
     await ref.putFile(image);
     url = await ref.getDownloadURL();
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
@@ -186,13 +201,17 @@ class FireStoreService {
     var destination = location;
     Map<String, dynamic> urls = {};
     try {
-      final ref1 = firebase_storage.FirebaseStorage.instance.ref(destination).child('images/logo');
+      final ref1 = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('images/logo');
 
-      final ref2 =
-          firebase_storage.FirebaseStorage.instance.ref(destination).child('images/advisor');
+      final ref2 = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('images/advisor');
 
-      final ref3 =
-          firebase_storage.FirebaseStorage.instance.ref(destination).child('images/coAdvisor1');
+      final ref3 = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('images/coAdvisor1');
 
       await ref1.putFile(images[0]);
       urls['logoUrl'] = await ref1.getDownloadURL();
@@ -202,12 +221,15 @@ class FireStoreService {
       urls['coAdvisorUrl1'] = await ref3.getDownloadURL();
 
       if (images.length == 6) {
-        final ref4 =
-            firebase_storage.FirebaseStorage.instance.ref(destination).child('images/coAdvisor2');
-        final ref5 =
-            firebase_storage.FirebaseStorage.instance.ref(destination).child('images/president');
-        final ref6 =
-            firebase_storage.FirebaseStorage.instance.ref(destination).child('images/secretary');
+        final ref4 = firebase_storage.FirebaseStorage.instance
+            .ref(destination)
+            .child('images/coAdvisor2');
+        final ref5 = firebase_storage.FirebaseStorage.instance
+            .ref(destination)
+            .child('images/president');
+        final ref6 = firebase_storage.FirebaseStorage.instance
+            .ref(destination)
+            .child('images/secretary');
         await ref4.putFile(images[3]);
         urls['coAdvisorUrl2'] = await ref4.getDownloadURL();
         await ref5.putFile(images[4]);
@@ -215,10 +237,12 @@ class FireStoreService {
         await ref6.putFile(images[5]);
         urls['secretaryUrl'] = await ref6.getDownloadURL();
       } else {
-        final ref4 =
-            firebase_storage.FirebaseStorage.instance.ref(destination).child('images/president');
-        final ref5 =
-            firebase_storage.FirebaseStorage.instance.ref(destination).child('images/secretary');
+        final ref4 = firebase_storage.FirebaseStorage.instance
+            .ref(destination)
+            .child('images/president');
+        final ref5 = firebase_storage.FirebaseStorage.instance
+            .ref(destination)
+            .child('images/secretary');
         await ref4.putFile(images[3]);
         urls['presidentUrl'] = await ref4.getDownloadURL();
         await ref5.putFile(images[4]);
@@ -237,7 +261,11 @@ class FireStoreService {
     fireStore = FirebaseFirestore.instance;
     auth = FirebaseAuth.instance;
     String uid = auth.currentUser!.uid;
-    await fireStore.collection("admin").doc(uid).get().then((value) => {adminData = value.data()});
+    await fireStore
+        .collection("admin")
+        .doc(uid)
+        .get()
+        .then((value) => {adminData = value.data()});
     // print(adminData);
     // print(uid);
     return adminData;
@@ -271,8 +299,11 @@ class FireStoreService {
     dynamic clubID = await clubAcronym();
     print(clubID);
     dynamic events = [];
-    QuerySnapshot querySnapshot =
-        await fireStore.collection("clubs").doc(clubID).collection("allEvents").get();
+    QuerySnapshot querySnapshot = await fireStore
+        .collection("clubs")
+        .doc(clubID)
+        .collection("allEvents")
+        .get();
 
     // Get data from docs and convert map to List
     // project1=
@@ -344,14 +375,22 @@ class FireStoreService {
   addMemberRegistration(String clubAcronym, Map<String, dynamic> data) async {
     String uid = auth.currentUser!.uid;
     data['uid'] = uid;
-    await fireStore.collection('clubs').doc(clubAcronym).collection("member").doc(uid).set(data);
+    await fireStore
+        .collection('clubs')
+        .doc(clubAcronym)
+        .collection("member")
+        .doc(uid)
+        .set(data);
   }
 
   getClubMember(String clubAcronym) async {
     dynamic data = [];
     try {
-      QuerySnapshot querySnapshot =
-          await fireStore.collection('clubs').doc(clubAcronym).collection("member").get();
+      QuerySnapshot querySnapshot = await fireStore
+          .collection('clubs')
+          .doc(clubAcronym)
+          .collection("member")
+          .get();
       data = querySnapshot.docs.map((doc) => doc.data()).toList();
       return data;
     } catch (e) {
@@ -378,16 +417,18 @@ class FireStoreService {
     }
   }
 
-  updateMemberRegistrationStatus(String clubAcronym, String uid, String status) async {
+  updateMemberRegistrationStatus(
+      String clubAcronym, String uid, String status, bool isApproved) async {
     await fireStore
         .collection('clubs')
         .doc(clubAcronym)
         .collection('member')
         .doc(uid)
-        .update({"status": status});
+        .update({"status": status, "isApproved":isApproved});
   }
 
-  updateEventRegistrationStatus(String clubAcronym, String eventName, String uid, String s) async {
+  updateEventRegistrationStatus(
+      String clubAcronym, String eventName, String uid, String s) async {
     await fireStore
         .collection('clubs')
         .doc(clubAcronym)
@@ -396,5 +437,21 @@ class FireStoreService {
         .collection("registration")
         .doc(uid)
         .update({'status': s});
+  }
+
+  getChats(String clubAcronym) async {
+    List<Map<String, dynamic>>? allData = [];
+    try {
+      final querySnapshot = await fireStore
+          .collection('clubs')
+          .doc(clubAcronym)
+          .collection('chats')
+          //h.orderBy("TimeStamp", descending: false)
+          .get();
+      allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+      return allData;
+    } catch (e) {
+      return [];
+    }
   }
 }

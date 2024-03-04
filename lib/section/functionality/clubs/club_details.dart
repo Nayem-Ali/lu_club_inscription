@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../servcies/firebase.dart';
+import '../../../services/firebase.dart';
 
 class ClubDetails extends StatefulWidget {
   final String clubAcronym;

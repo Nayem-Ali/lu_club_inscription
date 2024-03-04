@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lu_club_inscription/servcies/firebase.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:lu_club_inscription/section/functionality/chats/chat_page.dart';
+import 'package:lu_club_inscription/services/firebase.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
 class MemberRegistration extends StatefulWidget {
@@ -16,6 +19,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   FireStoreService fireStoreService = FireStoreService();
   Map<String, dynamic> userInfo = {};
   Map<String, dynamic> myClubData = {};
+  dynamic clubData = {};
   TextEditingController name = TextEditingController();
   TextEditingController id = TextEditingController();
   TextEditingController dept = TextEditingController();
@@ -38,6 +42,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
     id.text = userInfo['id'];
     email.text = FirebaseAuth.instance.currentUser!.email!;
     myClubData = await fireStoreService.getIndividualClubData(widget.clubAcronym) ?? {};
+    clubData = await fireStoreService.getClubData(widget.clubAcronym);
     setState(() {});
   }
 
@@ -55,6 +60,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
       "status": 'pending',
       "img": userInfo['img'],
       "uid": "",
+      "isApproved": false,
     };
     if (formKey.currentState!.validate()) {
       await fireStoreService.addMemberRegistration(widget.clubAcronym, data);
@@ -65,15 +71,16 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     fetchUserData();
+    super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("General Member Registration"),
+        title: myClubData['status'] == "approved" && clubData['clubAcronym']!=null? Text(clubData['clubAcronym']):const Text("General Member Registration"),
         centerTitle: true,
       ),
       body: myClubData.isEmpty
@@ -280,7 +287,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
               ),
             )
           : myClubData['status'] == "approved"
-              ? const Text("Appear General Chat")
+              ? ChatPage(clubAcronym: Get.arguments)
               : Center(
                   child: Text(
                     "Your registration status: ${myClubData['status']}".toUpperCase(),

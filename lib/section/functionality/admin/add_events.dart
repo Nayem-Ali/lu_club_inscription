@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:lu_club_inscription/servcies/firebase.dart';
+import 'package:lu_club_inscription/services/firebase.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
 class AddEvent extends StatefulWidget {
