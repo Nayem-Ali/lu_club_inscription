@@ -63,8 +63,21 @@ class _AllEventsState extends State<AllEvents> {
         title: const Text("Club Events"),
       ),
       body: events.length == 0
-          ? const Center(
-              child: Text("No events"),
+          ? Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddEvent(),
+                      ));
+                },
+                style: ElevatedButton.styleFrom(minimumSize: Size(300, 45)),
+                child: Text(
+                  "ADD Events",
+                  style: txtStyle(17, FontWeight.bold),
+                ),
+              ),
             )
           : Column(
               children: [
