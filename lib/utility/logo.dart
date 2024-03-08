@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
 
 class Logo extends StatelessWidget {

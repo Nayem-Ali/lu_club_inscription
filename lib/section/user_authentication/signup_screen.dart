@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lu_club_inscription/servcies/auth.dart';
 import 'package:lu_club_inscription/section/user_authentication/login_screen.dart';
+import '../../db_services/auth.dart';
 import '../../utility/logo.dart';
 import '../../utility/reusable_widgets.dart';
 

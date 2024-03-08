@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
+
+import '../../../db_services/firebase.dart';
 
 class AddEvent extends StatefulWidget {
   const AddEvent({Key? key}) : super(key: key);

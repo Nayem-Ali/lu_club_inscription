@@ -1,12 +1,14 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lu_club_inscription/section/functionality/chats.dart';
 import 'package:lu_club_inscription/section/functionality/chats/chat_page.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/club_details.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/club_events.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/member_registration.dart';
-import '../../../services/firebase.dart';
+
+import '../../../db_services/firebase.dart';
+
+
 
 class InitialClubPage extends StatefulWidget {
   const InitialClubPage({
@@ -23,21 +25,28 @@ class _InitialClubPageState extends State<InitialClubPage> {
   Map<String, dynamic> myClubData = {};
   dynamic clubData = {};
   var _page = 0;
-  final page = [
-
-    ClubEvents(clubAcronym: Get.arguments),
-    ClubDetails(clubAcronym: Get.arguments),
-    MemberRegistration(clubAcronym: Get.arguments),
-
-  ];
+  List<Widget> page = [] ;
 
   getData()async{
     //clubData = await fireStoreService.getClubData(widget.clubAcronym);
     myClubData = await fireStoreService.getIndividualClubData(Get.arguments);
+    setState(() {
+      page = [
+        ClubEvents(clubAcronym: Get.arguments),
+        ClubDetails(clubAcronym: Get.arguments),
+        myClubData['status'] == "approved"?ChatPage(clubAcronym: Get.arguments):MemberRegistration(clubAcronym: Get.arguments),
+
+      ];
+    });
   }
   @override
   void initState() {
     // TODO: implement initState
+    page = [
+      ClubEvents(clubAcronym: Get.arguments),
+      ClubDetails(clubAcronym: Get.arguments),
+      MemberRegistration(clubAcronym: Get.arguments),
+    ];
     getData();
     super.initState();
   }

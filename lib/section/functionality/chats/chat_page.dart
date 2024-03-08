@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-import '../../../services/firebase.dart';
+
+import '../../../db_services/firebase.dart';
+
+
+
 
 class ChatPage extends StatefulWidget {
   final String clubAcronym;
@@ -50,6 +51,7 @@ class _ChatPageState extends State<ChatPage> {
     clubData = await fireStoreService.getClubData(widget.clubAcronym);
     allPosts = await fireStoreService.getChats(clubData['clubAcronym']);
     print(allPosts);
+    print(clubData);
     setState(() {});
   }
 
@@ -70,7 +72,7 @@ class _ChatPageState extends State<ChatPage> {
     final querySnapshot = await fireStore
         .collection('clubs')
         .doc(clubData['clubAcronym'])
-        .collection('chats')
+        .collection('chats').orderBy("TimeStamp", descending: false)
         .get();
     allData = querySnapshot.docs.map((doc) => doc.id).toList();
     await fireStore
@@ -92,17 +94,17 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      // appBar: AppBar(
-      //   title: clubData['clubAcronym'] != null
-      //       ? Text(
-      //           clubData['clubAcronym'],
-      //           style: const TextStyle(
-      //             fontWeight: FontWeight.w600,
-      //           ),
-      //         )
-      //       : const Text(""),
-      //   centerTitle: true,
-      // ),
+      appBar: AppBar(
+        title: clubData['clubAcronym'] != null
+            ? Text(
+                clubData['clubAcronym'],
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            : const Text(""),
+        centerTitle: true,
+      ),
       body: userDetails.isNotEmpty
           ? Center(
               child: Column(
@@ -144,11 +146,14 @@ class _ChatPageState extends State<ChatPage> {
                                           icon: const Icon(
                                             Icons.delete,
                                             size: 30,
-                                          )),
+                                          ))
                                   ],
                                 ),
+                                userDetails["name"] !=
+                                    allPosts[index]['name']?SizedBox(height: 13,):SizedBox(height: 0,),
                                 Row(
                                   children: [
+
                                     Text(
                                       allPosts[index]['name'],
                                       style: TextStyle(color: Colors.grey[600]),
@@ -211,7 +216,7 @@ class _ChatPageState extends State<ChatPage> {
                 ],
               ),
             )
-          : const Text(""),
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }

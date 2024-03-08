@@ -1,7 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
+
+import '../../../db_services/firebase.dart';
+
 
 class MembersManagement extends StatefulWidget {
   const MembersManagement({Key? key}) : super(key: key);
@@ -109,6 +111,7 @@ class _MembersManagementState extends State<MembersManagement> {
               ),
               itemBuilder: (context, index) {
                 return Card(
+
                   child: Column(
                     children: [
                       CircleAvatar(

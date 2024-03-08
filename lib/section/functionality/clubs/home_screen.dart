@@ -65,17 +65,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Get.to(() => const InitialClubPage(),arguments: clubs[index]['clubAcronym']);
+                        Get.to(() => const InitialClubPage(),
+                            arguments: clubs[index]['clubAcronym']);
                       },
                       child: Card(
-                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 6),
                         elevation: 10,
                         color: Colors.teal.shade100,
                         child: Center(
                           child: ListTile(
                             title: CircleAvatar(
                               radius: Get.width * 0.15,
-                              foregroundImage: NetworkImage(clubs[index]['logoUrl']),
+                              foregroundImage:
+                                  NetworkImage(clubs[index]['logoUrl']),
                             ),
                             subtitle: Text(
                               clubs[index]['clubAcronym'],
@@ -89,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               )
+
           ],
         ),
       ),

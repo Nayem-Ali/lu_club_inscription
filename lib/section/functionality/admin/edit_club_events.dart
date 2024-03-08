@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lu_club_inscription/section/functionality/admin/all_events.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
+
+import '../../../db_services/firebase.dart';
 
 class EditEventData extends StatefulWidget {
   final dynamic eventData;

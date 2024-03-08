@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-import '../utility/reusable_widgets.dart';
 
 FirebaseFirestore fireStore = FirebaseFirestore.instance;
 FirebaseAuth auth = FirebaseAuth.instance;

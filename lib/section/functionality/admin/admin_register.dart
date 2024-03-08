@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lu_club_inscription/section/functionality/admin/admin_login.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
 import 'package:lu_club_inscription/utility/logo.dart';
 
+import '../../../db_services/firebase.dart';
 import '../../../utility/reusable_widgets.dart';
 
 class AdminRegister extends StatefulWidget {
@@ -19,8 +19,8 @@ class _AdminRegisterState extends State<AdminRegister> {
   TextEditingController adminPassword = TextEditingController();
   TextEditingController adminConfirmPassword = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  final emailRegex = RegExp(r'^(crystalizedmeteorite@gmail\.com)$');
-  final nameRegex = RegExp(r'^[a-zA-Z]+ [a-zA-Z]+( [a-zA-Z]+)?( [a-zA-Z]+)?$');
+  final emailRegex = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+  final nameRegex = RegExp(r"^[a-zA-Z\s]+$");
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _AdminRegisterState extends State<AdminRegister> {
                       if (value!.isEmpty) {
                         return "Enter your name!";
                       } else if (!nameRegex.hasMatch(value)) {
-                        return "Only Character and White Space is Allowed";
+                        return "Digit & Special Characters are not Allowed";
                       }
                       return null;
                     },

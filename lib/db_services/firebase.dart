@@ -173,7 +173,7 @@ class FireStoreService {
     dynamic clubData = {};
     fireStore = FirebaseFirestore.instance;
     auth = FirebaseAuth.instance;
-    String uid = auth.currentUser!.uid;
+    //String uid = auth.currentUser!.uid;
     await fireStore
         .collection("clubs")
         .doc(clubAcronym)
@@ -297,7 +297,7 @@ class FireStoreService {
 
   getEvents() async {
     dynamic clubID = await clubAcronym();
-    print(clubID);
+    //print(clubID);
     dynamic events = [];
     QuerySnapshot querySnapshot = await fireStore
         .collection("clubs")
@@ -446,7 +446,7 @@ class FireStoreService {
           .collection('clubs')
           .doc(clubAcronym)
           .collection('chats')
-          //h.orderBy("TimeStamp", descending: false)
+          .orderBy("TimeStamp", descending: false)
           .get();
       allData = querySnapshot.docs.map((doc) => doc.data()).toList();
       return allData;

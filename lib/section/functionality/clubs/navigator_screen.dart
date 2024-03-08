@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:lu_club_inscription/section/functionality/admin/adminDashboard.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/home_screen.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/profile_screen.dart';
-import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
 
 class NavigatorScreen extends StatefulWidget {
@@ -75,8 +74,8 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
           });
         },
         items: const [
-          Icon(Icons.home, color: Colors.white,),
-          Icon(Icons.person, color: Colors.white,),
+          Icon(Icons.home, color: Colors.white,size: 30,),
+          Icon(Icons.person, color: Colors.white,size: 30,),
         ],
       ),
       body:  page[_page],

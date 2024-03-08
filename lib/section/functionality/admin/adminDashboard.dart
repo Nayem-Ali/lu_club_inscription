@@ -4,8 +4,10 @@ import 'package:lu_club_inscription/section/functionality/admin/all_events.dart'
 import 'package:lu_club_inscription/section/functionality/admin/club_details.dart';
 import 'package:lu_club_inscription/section/functionality/admin/club_register.dart';
 import 'package:lu_club_inscription/section/functionality/admin/members_management.dart';
+import 'package:lu_club_inscription/section/functionality/chats/ChatForClubs.dart';
+import 'package:lu_club_inscription/section/functionality/chats/chat_page.dart';
 
-import '../../../services/firebase.dart';
+import '../../../db_services/firebase.dart';
 import '../../../utility/reusable_widgets.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -21,6 +23,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   dynamic clubData = {};
   bool hasClub = false;
   late String clubAcronym;
+  Map<String, dynamic> myClubData = {};
 
   @override
   void initState() {
@@ -34,6 +37,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     hasClub = adminData['hasClub'];
     clubAcronym = adminData['clubAcronym'];
     clubData = await fireStoreService.getClubData(clubAcronym);
+
     setState(() {});
   }
 
@@ -101,6 +105,25 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ),
                     label: Text(
                       "Members",
+                      style: txtStyle(24, FontWeight.bold),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 40,
+                  ),
+
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Get.to(ChatForClubs(clubAcronym: clubAcronym,));
+                    },
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(300, 80)),
+                    icon: const Icon(
+                      Icons.chat_bubble_outline,
+                      size: 40,
+                    ),
+                    label: Text(
+                      "Discussion",
                       style: txtStyle(24, FontWeight.bold),
                     ),
                   ),

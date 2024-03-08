@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/club_events.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
-
+import '../../../db_services/firebase.dart';
 import '../../../utility/reusable_widgets.dart';
 
 class EventDetailsPage extends StatefulWidget {

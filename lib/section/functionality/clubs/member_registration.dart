@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:lu_club_inscription/section/functionality/chats/chat_page.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
+
+import '../../../db_services/firebase.dart';
+
 
 class MemberRegistration extends StatefulWidget {
   final String clubAcronym;
@@ -80,7 +82,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: myClubData['status'] == "approved" && clubData['clubAcronym']!=null? Text(clubData['clubAcronym']):const Text("General Member Registration"),
+        title: const Text("General Member Registration"),
+        //title: myClubData['status'] == "approved" && clubData['clubAcronym']!=null? Text(clubData['clubAcronym']):const Text("General Member Registration"),
         centerTitle: true,
       ),
       body: myClubData.isEmpty
@@ -286,8 +289,8 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                 ),
               ),
             )
-          : myClubData['status'] == "approved"
-              ? ChatPage(clubAcronym: Get.arguments)
+          // : myClubData['status'] == "approved"
+          //     ? ChatPage(clubAcronym: Get.arguments)
               : Center(
                   child: Text(
                     "Your registration status: ${myClubData['status']}".toUpperCase(),

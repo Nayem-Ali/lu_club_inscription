@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
+
+import '../../../db_services/firebase.dart';
 
 class ClubRegistration extends StatefulWidget {
   const ClubRegistration({Key? key}) : super(key: key);
@@ -23,8 +24,8 @@ class _ClubRegistrationState extends State<ClubRegistration> {
 
   final phoneRegex = RegExp(r'^01[3-9][0-9]{8}$');
   final nameRegex =
-      RegExp(r'^[a-zA-Z]+ [a-zA-Z]+( [a-zA-Z]+)?( [a-zA-Z]+)?( [a-zA-Z]+)?$');
-  final emailRegex = RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$');
+      RegExp(r"^[a-zA-Z\s]+$");
+  final emailRegex = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
 
 
   late File logo;

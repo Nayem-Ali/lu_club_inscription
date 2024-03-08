@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/updateInfoScreen.dart';
 import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
-import '../../../services/firebase.dart';
+import '../../../db_services/firebase.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -124,106 +124,113 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                imageUrl != ""
-                    ? CircleAvatar(radius: 80, backgroundImage: NetworkImage(imageUrl))
-                    : const CircleAvatar(
-                        radius: 80,
-                        child: Icon(
-                          Icons.person,
-                          size: 100,
+      appBar: AppBar(
+        title: const Text("My Profile"),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: userInfo.isNotEmpty?Padding(
+              padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  imageUrl != ""
+                      ? CircleAvatar(radius: 80, backgroundImage: NetworkImage(imageUrl))
+                      : const CircleAvatar(
+                          radius: 80,
+                          child: Icon(
+                            Icons.person,
+                            size: 100,
+                          ),
                         ),
+                  const SizedBox(height: 10,),
+                  OutlinedButton.icon(
+                    onPressed: profilePicture,
+                    label: Text(
+                      "Change Profile Picture",
+                      style: txtStyle(18, FontWeight.w500),
+                    ),
+                    icon: const Icon(Icons.change_circle_outlined),
+                  ),
+                  const Divider(
+                    color: Colors.teal,
+                    thickness: 6,
+                    height: 50,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Name: ${userInfo['name']}",
+                        style: txtStyle(20, FontWeight.w500),
                       ),
-                OutlinedButton.icon(
-                  onPressed: profilePicture,
-                  label: Text(
-                    "Change Profile Picture",
-                    style: txtStyle(18, FontWeight.w500),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Student ID: ${userInfo['id']}",
+                        style: txtStyle(20, FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Department: ${userInfo['department']}",
+                        style: txtStyle(20, FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Batch: ${userInfo['batch']}",
+                        style: txtStyle(20, FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Section: ${userInfo['section']}",
+                        style: txtStyle(20, FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Date of Birth: ${userInfo['dob']}",
+                        style: txtStyle(20, FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Gender: ${userInfo['gender']}",
+                        style: txtStyle(20, FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Phone: ${userInfo['cell']}",
+                        style: txtStyle(20, FontWeight.w500),
+                      ),
+                    ],
                   ),
-                  icon: const Icon(Icons.change_circle_outlined),
-                ),
-                const Divider(
-                  color: Colors.teal,
-                  thickness: 6,
-                  height: 50,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Name: ${userInfo['name']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Student ID: ${userInfo['id']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Department: ${userInfo['department']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Batch: ${userInfo['batch']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Section: ${userInfo['section']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Date of Birth: ${userInfo['dob']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Gender: ${userInfo['gender']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Phone: ${userInfo['cell']}",
-                      style: txtStyle(20, FontWeight.w500),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                OutlinedButton.icon(
-                  onPressed: updateDialog,
-                  label: Text(
-                    "Update Information",
-                    style: txtStyle(20, FontWeight.w500),
+                  const SizedBox(
+                    height: 24,
                   ),
-                  icon: const Icon(Icons.update),
-                )
-              ],
-            ),
+                  OutlinedButton.icon(
+                    onPressed: updateDialog,
+                    label: Text(
+                      "Update Information",
+                      style: txtStyle(20, FontWeight.w500),
+                    ),
+                    icon: const Icon(Icons.update),
+                  )
+                ],
+              ),
+            ):const CircularProgressIndicator(),
           ),
         ),
       ),

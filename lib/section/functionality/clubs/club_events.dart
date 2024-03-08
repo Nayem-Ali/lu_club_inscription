@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:lu_club_inscription/section/functionality/chats/chat_page.dart';
 import 'package:lu_club_inscription/section/functionality/clubs/event_details_page.dart';
-import 'package:lu_club_inscription/utility/reusable_widgets.dart';
 
 class ClubEvents extends StatefulWidget {
   final String clubAcronym;
@@ -55,7 +52,8 @@ class _ClubEventsState extends State<ClubEvents> {
               itemBuilder: (context, index) {
                 String eventName = events[index]["eventName"] ?? "Unknown Event";
                 return Card(
-                  color: index % 2 == 1 ? Colors.cyan.shade100 : Colors.lime.shade100,
+                  color: index % 2 == 1 ? Colors.teal.shade50 : Colors.cyan.shade100,
+                  //color: index % 2 == 1 ? Colors.cyan.shade100 : Colors.lime.shade100,
                   child: ListTile(
                     title: GestureDetector(
                       onTap: () {
@@ -64,7 +62,7 @@ class _ClubEventsState extends State<ClubEvents> {
                       child: Text(
                         events[index]["eventName"].toString(),
                         style: const TextStyle(
-                            color: Colors.teal, fontWeight: FontWeight.bold, fontSize: 22),
+                            color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                     ),
                   ),

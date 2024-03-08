@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:lu_club_inscription/section/functionality/admin/admin_register.dart';
-import 'package:lu_club_inscription/services/firebase.dart';
 
+import '../../../db_services/firebase.dart';
 import '../../../utility/logo.dart';
 import '../../../utility/reusable_widgets.dart';
 
@@ -18,6 +20,18 @@ class _AdminLoginState extends State<AdminLogin> {
   TextEditingController adminPassword = TextEditingController();
   TextEditingController adminConfirmPassword = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  dynamic clubData = {};
+  getData() async {
+    clubData = await fireStoreService.getClubData(Get.arguments);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +64,8 @@ class _AdminLoginState extends State<AdminLogin> {
                 ElevatedButton(
                   onPressed: () {
                     fireStoreService.loginUser(
-                        adminEmail.text.trim(), adminPassword.text.trim(), context);
+                        adminEmail.text.trim(), adminPassword.text.trim(), context)
+                    ;
                   },
                   style: elevated(),
                   child: Text(
